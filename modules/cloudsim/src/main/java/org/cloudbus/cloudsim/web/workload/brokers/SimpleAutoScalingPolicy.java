@@ -81,13 +81,13 @@ public class SimpleAutoScalingPolicy implements IAutoscalingPolicy {
                         newASServer);
             } else if (avgCPU < scaleDownCPUTrigger && count > 1) {
                 List<HddVm> toStop = List.of(candidateToStop);
-                webBroker.destroyVMsAfter(toStop, 0);
+                webBroker.destroyVMsAfter(toStop, 1);
                 loadBalancer.getAppServers().removeAll(toStop);
                 lastActionTime = currentTime;
 
                 CustomLog
                         .printf("Simple-Autoscale(%s) Scale-Down: AS VMs terminated: %s, sessions to be killed:",
-                                webBroker.toString(), toStop.toString(),
+                                // webBroker.toString(), toStop.toString(),
                                 webBroker.getSessionsInServer(candidateToStop.getId()));
             }
         }
